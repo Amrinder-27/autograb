@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
-
+import VehicleForm from "./components/VehicleForm";
+import VehicleDetail from "./components/VehicleDetail";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 function App() {
+  const AppLayout = () => {
+    return (
+      <div className="app">
+        <Outlet />
+      </div>
+    );
+  };
+
+  const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <AppLayout />,
+      children: [
+        {
+          path: "/",
+          element: <VehicleForm />,
+        },
+        {
+          path: "/vehicle-details",
+          element: <VehicleDetail />,
+        },
+      ],
+    },
+  ]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RouterProvider router={appRouter} />
     </div>
   );
 }
